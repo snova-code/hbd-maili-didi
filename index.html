@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌄 Happy Birthday Kiran 🌄</title>
+<meta name="description" content="A birthday page for Kiran — the eldest, the one who leads — from her Babu.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script>
+/* ═══════════════════ SETTINGS — change these two ═══════════════════
+   DEFAULT_THEME  which sky the page opens in: 'dawn' or 'dusk'
+                  (the switch in the corner still works either way)
+   BIRTHDAY       YYYY-MM-DDTHH:MM:SS+TZ  —  +05:45 Nepal, +05:30 India
+                  counts up from a past date, down to a future one
+   ═════════════════════════════════════════════════════════════════ */
+const DEFAULT_THEME = 'dawn';
+const BIRTHDAY      = '1993-10-29T00:00:00+05:45';
+/* ═════════════════════════════════════════════════════════════════ */
+if(DEFAULT_THEME==='dusk')document.documentElement.dataset.theme='dusk';
+</script>
+<style>
+/* ═══════════════════════════════════════════════
+   KIRAN — "first light"
+   Editorial / architectural, deliberately not the
+   soft rounded glass of the other page.
+   ═══════════════════════════════════════════════ */
+:root{
+  --bg:#060a1c;
+  --ink:#f4efe6;
+  --ink2:#97a0b9;
+  --gold:#ffb347;
+  --amber:#ff8c42;
+  --rose:#f2765e;
+  --sky:#7fb0ff;
+  --pale:#ffe6bd;
+  --line:rgba(255,179,71,.20);
+  --line2:rgba(255,179,71,.55);
+  --panel:rgba(10,16,38,.55);
+  --D:'Fraunces',Georgia,serif;
+  --B:'Inter',system-ui,sans-serif;
+  --M:'Space Mono',ui-monospace,monospace;
+}
+[data-theme="dusk"]{
+  --bg:#14061a;
+  --ink:#f8edf3;
+  --ink2:#b198b2;
+  --gold:#ff9f6e;
+  --amber:#ff5f6d;
+  --rose:#c86bff;
+  --sky:#ff8fb0;
+  --pale:#ffd9c2;
+  --line:rgba(255,159,110,.22);
+  --line2:rgba(255,159,110,.6);
+  --panel:rgba(28,8,36,.55);
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--B);background:var(--bg);color:var(--ink);
+  overflow-x:hidden;line-height:1.75;-webkit-font-smoothing:antialiased;
+  transition:background .9s;
+}
+::selection{background:var(--gold);color:#17110a}
+
+#sky{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+/* keeps the copy legible once the sun is fully up */
+.scrim{position:fixed;inset:0;z-index:2;pointer-events:none;
+  background:rgba(4,7,20,.30);transition:background .9s}
+[data-theme="dusk"] .scrim{background:rgba(14,4,20,.32)}
+
+/* a hairline running down the whole page — the spine of the layout */
+.spine{
+  position:fixed;left:50%;top:0;bottom:0;width:1px;z-index:3;
+  background:linear-gradient(180deg,transparent,var(--line) 12%,var(--line) 88%,transparent);
+  opacity:0;transition:opacity 1.2s;pointer-events:none;
+}
+.spine.v{opacity:1}
+@media(max-width:720px){.spine{left:22px}}
+
+/* ═══════════ INTRO ═══════════ */
+#intro{
+  position:fixed;inset:0;z-index:9999;background:#03040c;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  cursor:pointer;transition:opacity 1.4s;padding:0 26px;
+}
+#intro.out{opacity:0;pointer-events:none}
+#intro canvas{position:absolute;inset:0;width:100%;height:100%}
+.ilines{position:relative;z-index:3;max-width:640px;text-align:left;width:100%}
+.iln{
+  font-family:var(--B);font-weight:300;
+  font-size:clamp(1rem,2.9vw,1.3rem);
+  color:#8c93ad;opacity:0;transform:translateY(14px);
+  transition:opacity 1s,transform 1s;margin-bottom:15px;
+}
+.iln.v{opacity:1;transform:none}
+.iln.em{color:var(--gold);font-weight:500}
+.iln.big{
+  font-family:var(--D);font-weight:700;
+  font-size:clamp(2.1rem,8vw,3.7rem);line-height:1.08;
+  color:var(--pale);margin-top:20px;letter-spacing:-.02em;
+}
+.ihint{
+  position:absolute;bottom:38px;left:26px;z-index:3;
+  font-family:var(--M);font-size:.62rem;letter-spacing:.3em;
+  text-transform:uppercase;color:#4b5068;opacity:0;transition:opacity 1s;
+}
+.ihint.v{opacity:1;animation:pulse 2.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:.95}}
+
+/* ═══════════ CONTROLS ═══════════ */
+.ctrl{
+  position:fixed;top:0;right:0;z-index:1000;
+  display:flex;align-items:stretch;opacity:0;transition:opacity .6s;
+  border-left:1px solid var(--line);border-bottom:1px solid var(--line);
+  background:rgba(4,6,16,.6);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+}
+.ctrl.v{opacity:1}
+.ctrl button{
+  font-family:var(--M);font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;
+  background:none;border:none;color:var(--ink2);cursor:pointer;
+  padding:13px 15px;transition:color .35s,background .35s;
+}
+.ctrl button+button{border-left:1px solid var(--line)}
+.ctrl button.on{color:var(--bg);background:var(--gold)}
+.mbtn{
+  position:fixed;bottom:0;right:0;z-index:1000;width:52px;height:52px;
+  border:none;border-left:1px solid var(--line);border-top:1px solid var(--line);
+  background:rgba(4,6,16,.6);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  cursor:pointer;opacity:0;transition:opacity .6s;
+  display:flex;align-items:flex-end;justify-content:center;gap:3px;padding:17px 0;
+}
+.mbtn.v{opacity:1}
+.mbtn i{display:block;width:3px;height:4px;background:var(--ink2);transition:background .3s}
+.mbtn.on i{background:var(--gold);animation:eq .5s ease-in-out infinite}
+.mbtn.on i:nth-child(1){height:8px;animation-delay:0s}
+.mbtn.on i:nth-child(2){height:16px;animation-delay:.1s}
+.mbtn.on i:nth-child(3){height:11px;animation-delay:.2s}
+@keyframes eq{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.35)}}
+
+/* ═══════════ LAYOUT ═══════════ */
+.wrap{position:relative;z-index:5;opacity:0;transition:opacity 1.1s}
+.wrap.v{opacity:1}
+.sec{max-width:760px;margin:0 auto;padding:78px 26px}
+@media(max-width:720px){.sec{padding:60px 22px 60px 44px}}
+
+.lbl{
+  font-family:var(--M);font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:22px;display:flex;align-items:center;gap:12px;
+}
+.lbl::before{content:'';width:30px;height:1px;background:var(--gold);flex:none}
+h2{
+  font-family:var(--D);font-weight:600;letter-spacing:-.02em;
+  font-size:clamp(1.5rem,4.6vw,2.1rem);line-height:1.22;
+  color:var(--pale);margin-bottom:22px;
+}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .9s,transform .9s}
+.rv.in{opacity:1;transform:none}
+
+/* ═══════════ HERO ═══════════ */
+.hero{
+  min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;
+  justify-content:center;max-width:760px;margin:0 auto;padding:0 26px;
+}
+@media(max-width:720px){.hero{padding:0 22px 0 44px}}
+.h-kick{
+  font-family:var(--M);font-size:.62rem;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:20px;opacity:0;transform:translateY(12px);
+}
+.h-name{
+  font-family:var(--D);font-weight:700;letter-spacing:-.035em;
+  font-size:clamp(4rem,19vw,10rem);line-height:.86;color:var(--pale);
+  opacity:0;transform:translateY(22px);
+}
+.h-mean{
+  font-family:var(--D);font-style:italic;font-weight:400;
+  font-size:clamp(1.05rem,3.6vw,1.5rem);color:var(--gold);
+  margin-top:14px;opacity:0;transform:translateY(16px);
+}
+.h-sub{
+  font-size:clamp(.98rem,2.9vw,1.12rem);color:var(--ink2);
+  margin-top:16px;max-width:30ch;opacity:0;transform:translateY(16px);
+}
+.h-go{
+  margin-top:48px;font-family:var(--M);font-size:.6rem;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--ink2);opacity:0;
+  display:flex;align-items:center;gap:12px;
+}
+.h-go i{display:block;width:1px;height:38px;background:linear-gradient(var(--gold),transparent);animation:drop 2.2s ease-in-out infinite}
+@keyframes drop{0%,100%{transform:scaleY(.4);transform-origin:top;opacity:.4}50%{transform:scaleY(1);opacity:1}}
+
+/* ═══════════ LETTER ═══════════ */
+.letter{border-left:2px solid var(--gold);padding:4px 0 4px 26px}
+.letter p{font-size:clamp(1rem,2.8vw,1.08rem);color:var(--ink2);margin-bottom:17px}
+.letter p:last-child{margin-bottom:0}
+.letter strong{color:var(--ink);font-weight:500}
+.letter em{color:var(--gold);font-style:normal;font-weight:500}
+.sig{
+  font-family:var(--D);font-style:italic;color:var(--gold);
+  font-size:1.05rem;margin-top:26px;padding-top:18px;border-top:1px solid var(--line);
+}
+
+/* ═══════════ SEVEN RAYS ═══════════ */
+.sunwheel{width:100%;max-width:430px;margin:10px auto 0;display:block}
+#rayg .s0{stop-color:var(--pale)}
+#rayg .s1{stop-color:var(--amber)}
+#coreg .s0{stop-color:#fffaf0}
+#coreg .s1{stop-color:var(--gold)}
+#coreg .s2{stop-color:var(--amber)}
+.ray{cursor:pointer}
+.ray path{
+  fill:rgba(255,255,255,.05);
+  stroke:rgba(255,255,255,.16);stroke-width:1;
+  transition:fill .8s,stroke .8s,filter .8s;
+}
+.ray:hover path{fill:rgba(255,255,255,.11)}
+/* no focus rectangle on tap, but keep a ring for keyboard users */
+.ray:focus{outline:none}
+.ray:focus-visible path{stroke:var(--pale);stroke-width:2.5}
+.ray.lit path{fill:url(#rayg);stroke:var(--gold);filter:drop-shadow(0 0 7px var(--gold))}
+.core{fill:url(#coreg);opacity:.2;transition:opacity 1.1s,filter 1.1s}
+.core.lit{opacity:1;filter:drop-shadow(0 0 24px var(--gold))}
+.horizon{stroke:var(--line2);stroke-width:1}
+.coreline{stroke:rgba(255,255,255,.18);stroke-width:1;fill:none;transition:stroke .8s}
+.core.lit~.coreline{stroke:var(--gold)}
+
+.tally{
+  font-family:var(--M);font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--ink2);margin-top:18px;
+}
+.tally b{color:var(--gold);font-weight:700}
+.trait{
+  margin-top:16px;border-left:1px solid var(--line);padding:2px 0 2px 20px;
+  min-height:104px;
+}
+.trait h3{
+  font-family:var(--D);font-weight:600;font-size:1.18rem;
+  color:var(--pale);margin-bottom:7px;
+}
+.trait p{color:var(--ink2);font-size:.97rem}
+.trait.swap{animation:swap .45s ease}
+@keyframes swap{from{opacity:0;transform:translateX(-9px)}to{opacity:1;transform:none}}
+.allin{
+  margin-top:20px;padding:18px 20px;border:1px solid var(--line2);
+  background:var(--panel);font-family:var(--D);font-size:1.05rem;
+  color:var(--pale);display:none;
+}
+.allin.show{display:block;animation:swap .7s ease}
+
+/* ═══════════ PHOTO DECK ═══════════ */
+.deck{
+  position:relative;height:400px;margin:22px auto 0;max-width:290px;
+  cursor:pointer;user-select:none;
+}
+@media(max-width:400px){.deck{height:350px;max-width:245px}}
+.card{
+  position:absolute;inset:0;background:var(--panel);
+  border:1px solid var(--line);overflow:hidden;
+  transition:transform .55s cubic-bezier(.2,.8,.2,1),opacity .55s;
+  display:flex;flex-direction:column;
+}
+.card img{width:100%;flex:1;object-fit:cover;min-height:0}
+.card img.miss{display:none}
+.ph{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:9px;color:var(--ink2);font-family:var(--M);font-size:.62rem;letter-spacing:.2em;
+}
+.ph b{font-size:1.7rem;opacity:.4;font-weight:400}
+.cap{
+  padding:13px 15px;font-family:var(--D);font-style:italic;font-size:.93rem;
+  color:var(--pale);border-top:1px solid var(--line);flex:none;background:rgba(0,0,0,.25);
+}
+.deckhint{
+  font-family:var(--M);font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--ink2);text-align:center;margin-top:18px;
+}
+
+/* ═══════════ WISHES — an ascent ═══════════ */
+.ascent{position:relative;padding-left:34px;margin-top:10px}
+.ascent::before{
+  content:'';position:absolute;left:8px;top:6px;bottom:6px;width:1px;
+  background:linear-gradient(180deg,var(--gold),var(--line),transparent);
+}
+.step{position:relative;padding-bottom:30px}
+.step:last-child{padding-bottom:0}
+.step::before{
+  content:'';position:absolute;left:-30px;top:8px;width:9px;height:9px;
+  border:1px solid var(--gold);background:var(--bg);transform:rotate(45deg);
+  transition:background .5s,box-shadow .5s;
+}
+.step.in::before{background:var(--gold);box-shadow:0 0 14px var(--gold)}
+.step em{
+  display:block;font-family:var(--M);font-style:normal;font-size:.58rem;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;
+}
+.step p{color:var(--ink2);font-size:1rem}
+
+/* ═══════════ COUNTDOWN ═══════════ */
+.since{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:30px 0;margin-top:10px}
+.bignum{
+  font-family:var(--D);font-weight:700;letter-spacing:-.03em;
+  font-size:clamp(3rem,13vw,5.4rem);line-height:1;color:var(--gold);
+}
+.bigsub{font-family:var(--M);font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--ink2);margin-top:10px}
+.clock{font-family:var(--M);font-size:.78rem;color:var(--ink2);margin-top:14px;letter-spacing:.1em}
+
+/* ═══════════ FINALE ═══════════ */
+.fin{
+  min-height:82vh;display:flex;flex-direction:column;justify-content:center;
+  max-width:760px;margin:0 auto;padding:60px 26px 130px;
+}
+@media(max-width:720px){.fin{padding:60px 22px 130px 44px}}
+.fin p{
+  font-family:var(--D);font-weight:400;
+  font-size:clamp(1.45rem,5vw,2.3rem);line-height:1.34;color:var(--ink);
+  letter-spacing:-.015em;
+}
+.fin p b{color:var(--gold);font-weight:600}
+.fin .sig{margin-top:30px;border-top:none;padding-top:0}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  .rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<canvas id="sky"></canvas>
+<div class="scrim"></div>
+<div class="spine" id="spine"></div>
+
+<!-- ═══════ INTRO ═══════ -->
+<div id="intro">
+  <canvas id="ic"></canvas>
+  <div class="ilines">
+    <div class="iln" id="i1">Before anyone else is awake, something is already up.</div>
+    <div class="iln" id="i2">Somebody has to go first — decide, carry, hold the line.</div>
+    <div class="iln" id="i3">In this house, that has always been one person.</div>
+    <div class="iln" id="i4">She was named for light. She has not been anything else since.</div>
+    <div class="iln em" id="i5">So this morning, the sky can do the talking:</div>
+    <div class="iln big" id="i6">Happy Birthday,<br>Kiran 🌄</div>
+  </div>
+  <div class="ihint" id="ih">tap to let the light in</div>
+</div>
+
+<!-- ═══════ CONTROLS ═══════ -->
+<div class="ctrl" id="ctrl">
+  <button id="bDawn" class="on" onclick="setTheme('dawn')">Dawn</button>
+  <button id="bDusk" onclick="setTheme('dusk')">Dusk</button>
+</div>
+<button class="mbtn" id="mb" onclick="toggleMusic()" aria-label="music">
+  <i></i><i></i><i></i>
+</button>
+<audio id="aud" loop preload="metadata">
+  <source src="birthday-song.mp3" type="audio/mpeg">
+  <source src="birthday-song2.mp3" type="audio/mpeg">
+</audio>
+
+<div class="wrap" id="wrap">
+
+<!-- HERO -->
+<section class="hero">
+  <p class="h-kick" id="hk">eldest · first light</p>
+  <h1 class="h-name" id="hn">Kiran</h1>
+  <p class="h-mean" id="hm">किरण — a ray of light</p>
+  <p class="h-sub" id="hs">The one who goes first, so everybody behind her gets to rest.</p>
+  <div class="h-go" id="hg"><i></i><span>scroll</span></div>
+</section>
+
+<!-- LETTER -->
+<section class="sec rv">
+  <div class="lbl">a letter from your Babu</div>
+  <div class="letter">
+    <h2>Dear didi,</h2>
+    <p>Most families have someone who quietly decides everything. Ours has you — except there has never been anything quiet about it. You pick the direction, you take the weight, and you have <em>never once handed it back</em> when it got heavy.</p>
+    <p>I've watched you love people the way everyone else only talks about loving people. <strong>Showing up. Remembering. Noticing the thing nobody said out loud.</strong> You hold on to every single person who ever stood behind you, and you make sure they know it.</p>
+    <p>And you have never let a kindness go unpaid. Somebody does one small thing for you and you file it away somewhere permanent — then hand it back twice over, years later, long after they've forgotten they ever gave it.</p>
+    <p>You look after this family, and everyone attached to it, exactly the same <em>whether or not anybody ever says thank you</em>. You never made it conditional on being appreciated. I don't know where you learned that. It is the most impressive thing about you.</p>
+    <p>People call you strict. I know what it actually is. The world out there isn't soft, so you decided a long time ago that it wasn't going to reach us. <strong>Every rule you ever made was a wall around somebody you love.</strong></p>
+    <p>So happy birthday to the one who leads this house. You have carried more of it than anyone will ever properly thank you for. Today you don't carry anything — <em>today we carry you.</em> 🌄</p>
+    <p class="sig">with everything, always — your Babu ❤️</p>
+  </div>
+</section>
+
+<!-- SEVEN PILLARS -->
+<section class="sec rv">
+  <div class="lbl">one light, seven rays</div>
+  <h2>किरण means a ray of light. Here are seven of them — tap each one.</h2>
+  <svg class="sunwheel" id="sunwheel" viewBox="0 0 400 200">
+    <defs>
+      <linearGradient id="rayg" x1="0" y1="1" x2="0" y2="0">
+        <stop class="s0" offset="0"/><stop class="s1" offset="1"/>
+      </linearGradient>
+      <radialGradient id="coreg">
+        <stop class="s0" offset="0"/><stop class="s1" offset=".55"/><stop class="s2" offset="1"/>
+      </radialGradient>
+    </defs>
+    <g id="rays"></g>
+    <path id="core" class="core" d="M152,186 A48,48 0 0 1 248,186 Z"/>
+    <path class="coreline" d="M152,186 A48,48 0 0 1 248,186"/>
+    <line class="horizon" x1="18" y1="186" x2="382" y2="186"/>
+  </svg>
+  <p class="tally" id="tally"><b>0</b> / 7 rays lit</p>
+  <div class="trait" id="trait">
+    <h3>Start anywhere</h3>
+    <p>Each ray is one thing she is. Tap one and it stays lit.</p>
+  </div>
+  <div class="allin" id="allin">
+    One light, seven rays — and every single one of them pointed at somebody
+    she loves. That is the whole of her, and the reason this house wakes up warm. 🌄
+  </div>
+</section>
+
+<!-- PHOTO DECK -->
+<section class="sec rv">
+  <div class="lbl">the eldest</div>
+  <div class="deck" id="deck"></div>
+  <p class="deckhint">tap the stack to shuffle through</p>
+</section>
+
+<!-- WISHES -->
+<section class="sec rv">
+  <div class="lbl">seven wishes, going up</div>
+  <h2>For the year ahead.</h2>
+  <div class="ascent" id="ascent"></div>
+</section>
+
+<!-- SINCE -->
+<section class="sec rv">
+  <div class="lbl" id="sinceLbl">first light · 29 october 1993</div>
+  <div class="since">
+    <div class="bignum" id="bigN">—</div>
+    <div class="bigsub" id="bigS">days</div>
+    <div class="clock" id="clock"></div>
+  </div>
+</section>
+
+<!-- FINALE -->
+<section class="fin rv">
+  <p>Everybody in this house is standing on something <b>you built</b>.<br><br>Happy Birthday, didi.</p>
+  <p class="sig">— your Babu ❤️</p>
+</section>
+
+</div>
+<script>
+const $=s=>document.getElementById(s);
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const TOUCH=matchMedia('(hover: none)').matches;
+const R=(a,b)=>a+Math.random()*(b-a);
+const clamp=(v,a,b)=>v<a?a:v>b?b:v;
+const dusk=()=>document.documentElement.dataset.theme==='dusk';
+function prng(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+
+/* ═══════════════ PALETTES ═══════════════
+   Each sky is two gradients — night and full light — and the page
+   cross-fades between them as you scroll. */
+const PAL={
+  dawn:{
+    night:[[6,10,28],[11,18,48],[20,28,66]],
+    light:[[10,24,56],[58,78,140],[240,163,94]],
+    sun:['rgba(255,245,214,1)','rgba(255,179,71,.85)','rgba(255,122,61,0)'],
+    ridge:['#223061','#18224a','#101733','#070b1b'],
+    star:'255,245,222', ray:'255,190,110', cloud:'255,170,120', lantern:'255,186,96'
+  },
+  dusk:{
+    night:[[20,6,26],[34,10,44],[58,16,58]],
+    light:[[26,8,38],[120,38,86],[255,120,90]],
+    sun:['rgba(255,228,207,1)','rgba(255,122,109,.85)','rgba(214,65,143,0)'],
+    ridge:['#3a1340','#2c0d32','#1d0722','#100314'],
+    star:'255,226,238', ray:'255,135,125', cloud:'255,110,130', lantern:'255,142,120'
+  }
+};
+const pal=()=>dusk()?PAL.dusk:PAL.dawn;
+
+/* ═══════════════ SKY CANVAS ═══════════════ */
+const cv=$('sky'),cx=cv.getContext('2d');
+let W=0,H=0,DPR=1,ridges=[],stars=[],clouds=[],flocks=[],lanterns=[];
+let mx=0,tmx=0,prog=0,nextFlock=0,nextLan=0;
+
+function noise1(seed,n){
+  const r=prng(seed),g=[];for(let i=0;i<n;i++)g.push(r());
+  return x=>{const i=Math.floor(x),f=x-i,s=f*f*(3-2*f);
+    return g[((i%n)+n)%n]*(1-s)+g[(((i+1)%n)+n)%n]*s};
+}
+function makeRidge(seed,freq,amp,base){
+  const n1=noise1(seed,64),n2=noise1(seed+77,64),n3=noise1(seed+911,64);
+  const rid=v=>1-Math.abs(2*v-1);            // folds the noise into peaks
+  const pts=[],span=W*1.35,step=Math.max(7,span/170);
+  for(let x=-W*.18;x<=span;x+=step){
+    const u=x/W*freq;
+    const h=rid(n1(u))*.60+rid(n2(u*2.4))*.27+rid(n3(u*5.1))*.13;
+    pts.push({x,y:base-Math.pow(h,1.35)*amp*1.35});
+  }
+  return pts;
+}
+function buildScene(){
+  const P=pal();
+  ridges=[
+    {pts:makeRidge(101,0.9,H*.17,H*.62),rate:.05,c:P.ridge[0],px:6},
+    {pts:makeRidge(202,1.5,H*.21,H*.73),rate:.15,c:P.ridge[1],px:14},
+    {pts:makeRidge(303,2.2,H*.23,H*.86),rate:.32,c:P.ridge[2],px:26},
+    {pts:makeRidge(404,3.1,H*.27,H*1.02),rate:.58,c:P.ridge[3],px:44}
+  ];
+  ridges.forEach((rg,i)=>{
+    const body=new Path2D(),crest=new Path2D();
+    body.moveTo(rg.pts[0].x,rg.pts[0].y);crest.moveTo(rg.pts[0].x,rg.pts[0].y);
+    for(let k=1;k<rg.pts.length;k++){body.lineTo(rg.pts[k].x,rg.pts[k].y);crest.lineTo(rg.pts[k].x,rg.pts[k].y)}
+    body.lineTo(W+300,H+400);body.lineTo(-400,H+400);body.closePath();
+    const top=rg.pts.reduce((m,p)=>Math.min(m,p.y),1e9);
+    const lg=cx.createLinearGradient(0,top,0,H*1.1);
+    lg.addColorStop(0,rg.c);lg.addColorStop(1,i===3?'#000':rg.c);
+    rg.body=body;rg.crest=crest;rg.grad=lg;
+  });
+  stars=[];
+  const n=TOUCH?90:150;
+  for(let i=0;i<n;i++)stars.push({x:Math.random()*W,y:Math.random()*H*.72,
+    r:R(.4,1.5),a:R(.25,1),tp:R(0,6.3),ts:R(.006,.02),d:R(.04,.3)});
+  clouds=[];
+  for(let i=0;i<(TOUCH?3:5);i++)clouds.push({x:R(-.2,1.1)*W,y:H*(.42+i*.065),
+    w:R(.35,.8)*W,h:R(10,26),v:R(.04,.16)*(Math.random()<.5?-1:1),a:R(.18,.42)});
+}
+function sizeSky(){
+  W=innerWidth;H=innerHeight;
+  DPR=Math.min(devicePixelRatio||1,TOUCH?1.5:2);
+  cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);
+  cx.setTransform(DPR,0,0,DPR,0,0);
+  buildScene();
+}
+function lerp(a,b,t){return a+(b-a)*t}
+function mixStop(n,l,t){return `rgb(${Math.round(lerp(n[0],l[0],t))},${Math.round(lerp(n[1],l[1],t))},${Math.round(lerp(n[2],l[2],t))})`}
+
+function drawSun(P,t){
+  const sx0=W*.78+mx*10, sy0=H*.95-t*H*.74, r=Math.min(W,H)*.085;
+  const g=cx.createRadialGradient(sx0,sy0,0,sx0,sy0,r*5.2);
+  g.addColorStop(0,P.sun[0]);g.addColorStop(.085,P.sun[0]);
+  g.addColorStop(.20,P.sun[1]);g.addColorStop(1,P.sun[2]);
+  cx.fillStyle=g;cx.beginPath();cx.arc(sx0,sy0,r*5.2,0,6.283);cx.fill();
+  // rays sweeping out of it, stronger the higher it gets — kept faint so
+  // they never fight the text sitting on top of them
+  const ra=.014+t*.030;
+  cx.save();cx.globalCompositeOperation='lighter';cx.translate(sx0,sy0);
+  cx.rotate(rayRot);
+  for(let i=0;i<13;i++){
+    const a=i/13*6.283,w=(i%2?.022:.040),len=r*(i%2?7:10.5);
+    cx.beginPath();cx.moveTo(0,0);
+    cx.lineTo(Math.cos(a-w)*len,Math.sin(a-w)*len);
+    cx.lineTo(Math.cos(a+w)*len,Math.sin(a+w)*len);
+    cx.closePath();cx.fillStyle=`rgba(${P.ray},${ra})`;cx.fill();
+  }
+  cx.restore();
+  return {x:sx0,y:sy0};
+}
+let rayRot=0;
+
+function drawBird(x,y,s,flap){
+  cx.beginPath();
+  cx.moveTo(x-s,y+flap*s*.55);
+  cx.quadraticCurveTo(x-s*.45,y-s*.5,x,y);
+  cx.quadraticCurveTo(x+s*.45,y-s*.5,x+s,y+flap*s*.55);
+  cx.stroke();
+}
+function spawnFlock(){
+  const dir=Math.random()<.5?1:-1;
+  flocks.push({x:dir>0?-120:W+120,y:R(.14,.46)*H,dir,v:R(.9,1.7)*dir,
+    n:3+~~(Math.random()*4),ph:0,s:R(4,7)});
+}
+function spawnLantern(x,y){
+  if(lanterns.length>16)return;
+  lanterns.push({x:x!==undefined?x:R(.1,.9)*W, y:y!==undefined?y:H+20,
+    vy:-R(.28,.62), sway:R(0,6.3), sv:R(.006,.015), amp:R(6,20),
+    r:R(4,8), a:0, fade:R(.0022,.0042), born:0});
+}
+
+function frame(){
+  const doc=Math.max(1,document.documentElement.scrollHeight-innerHeight);
+  prog=clamp((window.scrollY||0)/doc,0,1);
+  const t=Math.pow(prog,.8), P=pal();
+  mx+=(tmx-mx)*.05;
+  if(!RM)rayRot+=.0006;
+
+  // sky
+  const g=cx.createLinearGradient(0,0,0,H);
+  g.addColorStop(0,mixStop(P.night[0],P.light[0],t));
+  g.addColorStop(.55,mixStop(P.night[1],P.light[1],t));
+  g.addColorStop(1,mixStop(P.night[2],P.light[2],t));
+  cx.fillStyle=g;cx.fillRect(0,0,W,H);
+
+  // stars, washed out by the rising light
+  const sa=clamp(1-t*1.75,0,1);
+  if(sa>.01){
+    cx.globalCompositeOperation='lighter';
+    stars.forEach(s=>{
+      if(!RM)s.tp+=s.ts;
+      const a=s.a*(RM?.75:.5+.5*Math.sin(s.tp))*sa;
+      cx.beginPath();cx.arc(s.x+mx*s.d*20,s.y+t*H*s.d*.5,s.r,0,6.283);
+      cx.fillStyle=`rgba(${P.star},${a})`;cx.fill();
+    });
+    cx.globalCompositeOperation='source-over';
+  }
+
+  drawSun(P,t);
+
+  // lit cloud bands
+  clouds.forEach(c=>{
+    if(!RM)c.x+=c.v;
+    if(c.x>W*1.25)c.x=-W*.3; if(c.x<-W*.3)c.x=W*1.25;
+    const y=c.y+t*H*.1, cg=cx.createRadialGradient(c.x,y,0,c.x,y,c.w*.5);
+    cg.addColorStop(0,`rgba(${P.cloud},${(c.a*t*.55).toFixed(3)})`);
+    cg.addColorStop(1,`rgba(${P.cloud},0)`);
+    cx.save();cx.globalCompositeOperation='lighter';cx.translate(c.x,y);
+    cx.scale(1,c.h/(c.w*.5));cx.translate(-c.x,-y);
+    cx.fillStyle=cg;cx.beginPath();cx.arc(c.x,y,c.w*.5,0,6.283);cx.fill();cx.restore();
+  });
+
+  // birds — a V, leader out front
+  if(!RM){
+    const now=performance.now();
+    if(now>nextFlock){spawnFlock();nextFlock=now+R(9000,20000)}
+    cx.strokeStyle=`rgba(0,0,0,${.30+t*.35})`;cx.lineWidth=1.4;cx.lineCap='round';
+    for(let i=flocks.length-1;i>=0;i--){
+      const f=flocks[i];f.x+=f.v;f.ph+=.13;
+      for(let k=0;k<f.n;k++){
+        const bx=f.x-f.dir*k*15, by=f.y+(k?(k%2?1:-1)*Math.ceil(k/2)*9:0);
+        drawBird(bx,by,f.s,Math.sin(f.ph+k*.45));
+      }
+      if(f.x<-220||f.x>W+220)flocks.splice(i,1);
+    }
+  }
+
+  // ridges, each sliding down at its own rate
+  ridges.forEach((rg,i)=>{
+    if(!rg.body)return;
+    cx.save();cx.translate(mx*rg.px,t*H*rg.rate);
+    cx.fillStyle=rg.grad;cx.fill(rg.body);
+    cx.strokeStyle=`rgba(${P.ray},${((.10+t*.42)*(1-i*.17)).toFixed(3)})`;
+    cx.lineWidth=1.2;cx.stroke(rg.crest);
+    cx.restore();
+  });
+
+  // lanterns rising in front of everything
+  if(!RM){
+    const now=performance.now();
+    if(now>nextLan){spawnLantern();nextLan=now+R(5000,13000)}
+    cx.globalCompositeOperation='lighter';
+    for(let i=lanterns.length-1;i>=0;i--){
+      const L=lanterns[i];
+      L.y+=L.vy;L.sway+=L.sv;L.born=Math.min(1,L.born+.02);
+      if(L.y<H*.52)L.a=Math.max(0,L.a-L.fade*1.6);else L.a=Math.min(1,L.a+.02);
+      const x=L.x+Math.sin(L.sway)*L.amp, al=L.a*L.born;
+      const lg=cx.createRadialGradient(x,L.y,0,x,L.y,L.r*4.4);
+      lg.addColorStop(0,`rgba(${P.lantern},${(.42*al).toFixed(3)})`);
+      lg.addColorStop(.3,`rgba(${P.lantern},${(.15*al).toFixed(3)})`);
+      lg.addColorStop(1,`rgba(${P.lantern},0)`);
+      cx.fillStyle=lg;cx.beginPath();cx.arc(x,L.y,L.r*4.4,0,6.283);cx.fill();
+      cx.fillStyle=`rgba(255,240,214,${(.62*al).toFixed(3)})`;
+      cx.beginPath();cx.ellipse(x,L.y,L.r*.72,L.r,0,0,6.283);cx.fill();
+      if(L.y<-60||al<=0&&L.y<H*.5)lanterns.splice(i,1);
+    }
+    cx.globalCompositeOperation='source-over';
+  }
+  requestAnimationFrame(frame);
+}
+
+let rsT=null,lastW=0;
+sizeSky();lastW=W;
+addEventListener('resize',()=>{
+  const w=innerWidth,h=innerHeight;
+  W=w;H=h;DPR=Math.min(devicePixelRatio||1,TOUCH?1.5:2);
+  cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);cx.setTransform(DPR,0,0,DPR,0,0);
+  clearTimeout(rsT);
+  rsT=setTimeout(()=>{if(!TOUCH||Math.abs(W-lastW)>60){lastW=W;buildScene()}},260);
+});
+if(!TOUCH)addEventListener('mousemove',e=>{tmx=(e.clientX/W-.5)*2},{passive:true});
+// every tap sends a lantern up from that spot
+addEventListener('pointerdown',e=>{
+  if(RM||(e.target.closest&&e.target.closest('#intro')))return;
+  spawnLantern(e.clientX,e.clientY);
+},{passive:true});
+requestAnimationFrame(frame);
+
+/* ═══════════════ INTRO — first light on a dark horizon ═══════════════ */
+const ic=$('ic'),ix=ic.getContext('2d');
+let motes=[],glow=0;
+function sizeI(){ic.width=innerWidth;ic.height=innerHeight;
+  motes=[];for(let i=0;i<90;i++)motes.push({x:Math.random()*ic.width,y:Math.random()*ic.height,
+    r:Math.random()*1.3+.2,v:Math.random()*.25+.05,a:Math.random()*.5+.15,tp:Math.random()*6.3});}
+addEventListener('resize',sizeI);sizeI();
+(function introLoop(){
+  const w=ic.width,h=ic.height;
+  ix.fillStyle='#03040c';ix.fillRect(0,0,w,h);
+  glow=Math.min(1,glow+.0022);
+  const g=ix.createLinearGradient(0,h*.52,0,h);
+  g.addColorStop(0,`rgba(255,160,70,0)`);
+  g.addColorStop(1,`rgba(255,150,60,${(.30*glow).toFixed(3)})`);
+  ix.fillStyle=g;ix.fillRect(0,h*.52,w,h*.48);
+  const rg=ix.createRadialGradient(w*.5,h*1.02,0,w*.5,h*1.02,h*.72*glow+1);
+  rg.addColorStop(0,`rgba(255,228,170,${(.5*glow).toFixed(3)})`);
+  rg.addColorStop(1,'rgba(255,170,80,0)');
+  ix.fillStyle=rg;ix.beginPath();ix.arc(w*.5,h*1.02,h*.72*glow+1,0,6.283);ix.fill();
+  ix.globalCompositeOperation='lighter';
+  motes.forEach(m=>{m.y-=m.v;m.tp+=.015;if(m.y<-4){m.y=h+4;m.x=Math.random()*w}
+    ix.beginPath();ix.arc(m.x,m.y,m.r,0,6.283);
+    ix.fillStyle=`rgba(255,235,200,${(m.a*(.5+.5*Math.sin(m.tp))).toFixed(3)})`;ix.fill()});
+  ix.globalCompositeOperation='source-over';
+  if($('intro').style.display!=='none')requestAnimationFrame(introLoop);
+})();
+const ILN=['i1','i2','i3','i4','i5','i6'];
+ILN.forEach((id,i)=>setTimeout(()=>$(id).classList.add('v'),700+i*1750));
+setTimeout(()=>$('ih').classList.add('v'),700+ILN.length*1750);
+$('intro').addEventListener('click',function(){
+  if(!$('i6').classList.contains('v')){ILN.forEach(id=>$(id).classList.add('v'));$('ih').classList.add('v');glow=1;return}
+  this.classList.add('out');
+  $('wrap').classList.add('v');$('ctrl').classList.add('v');
+  $('mb').classList.add('v');$('spine').classList.add('v');
+  enterHero();
+  setTimeout(()=>{this.style.display='none';tryMusic()},1500);
+});
+function enterHero(){
+  [['hk',0],['hn',160],['hm',420],['hs',600],['hg',1000]].forEach(([id,d])=>{
+    setTimeout(()=>{const e=$(id);e.style.transition='opacity .9s,transform .9s';
+      e.style.opacity=1;e.style.transform='none'},d);
+  });
+}
+
+/* ═══════════════ THEME ═══════════════ */
+function setTheme(name){
+  if(name==='dusk')document.documentElement.dataset.theme='dusk';
+  else delete document.documentElement.dataset.theme;
+  $('bDawn').classList.toggle('on',name!=='dusk');
+  $('bDusk').classList.toggle('on',name==='dusk');
+  buildScene();
+}
+setTheme(dusk()?'dusk':'dawn');
+
+/* ═══════════════ MUSIC ═══════════════ */
+const aud=$('aud');let playing=false;
+function tryMusic(){aud.volume=.32;aud.play().then(()=>{playing=true;$('mb').classList.add('on')}).catch(()=>{})}
+function toggleMusic(){
+  if(playing){aud.pause();playing=false;$('mb').classList.remove('on')}
+  else aud.play().then(()=>{playing=true;$('mb').classList.add('on')}).catch(()=>{});
+}
+
+/* ═══════════════ SEVEN PILLARS ═══════════════ */
+const RAYS=[
+  ['She goes first',
+   'Somebody has to decide. In this house that somebody is her, and she has never once passed it along to anyone else.'],
+  ['She loves out loud',
+   'The people she loves never have to wonder about it. She shows up, she checks in, she carries the part they cannot.'],
+  ['She keeps her people close',
+   'Everyone who ever stood behind her is still held close years later. She never lets that go unsaid.'],
+  ['She forgets nothing kind',
+   'One small favour and it is written down somewhere permanent — then returned twice over, long after you forgot you gave it.'],
+  ['She gives without a receipt',
+   'Family, relatives, anyone attached to this house: she looks after all of them exactly the same whether or not a single thank you comes back. The giving was never conditional.'],
+  ['She is firm on purpose',
+   'The world out there is not soft, so she is not either. Every strict word is a wall built around somebody inside.'],
+  ['She raises the floor',
+   'Nobody in this family sets their standard low. They watched her and recalibrated. That is her doing.']
+];
+let lit=0;
+const NS='http://www.w3.org/2000/svg';
+const RC={x:200,y:186,rin:48,rout:166};
+const gRays=$('rays');
+RAYS.forEach((r,i)=>{
+  // each ray is a tapered wedge fanning up off the horizon
+  const a0=Math.PI+(i/RAYS.length)*Math.PI, a1=Math.PI+((i+1)/RAYS.length)*Math.PI;
+  const gap=.028, taper=(a1-a0-gap*2)*.27;
+  const pt=(rad,ang)=>`${(RC.x+Math.cos(ang)*rad).toFixed(1)},${(RC.y+Math.sin(ang)*rad).toFixed(1)}`;
+  const d=`M${pt(RC.rin,a0+gap)} L${pt(RC.rout,a0+gap+taper)} `+
+          `L${pt(RC.rout,a1-gap-taper)} L${pt(RC.rin,a1-gap)} Z`;
+  const g=document.createElementNS(NS,'g');
+  g.setAttribute('class','ray');
+  g.setAttribute('role','button');
+  g.setAttribute('tabindex','0');
+  g.setAttribute('aria-label',r[0]);
+  const path=document.createElementNS(NS,'path');
+  path.setAttribute('d',d);
+  g.appendChild(path);
+  const light=()=>{
+    const tr=$('trait');
+    tr.innerHTML=`<h3>${r[0]}</h3><p>${r[1]}</p>`;
+    tr.classList.remove('swap');void tr.offsetWidth;tr.classList.add('swap');
+    if(g.classList.contains('lit'))return;
+    g.classList.add('lit');lit++;
+    $('tally').innerHTML=`<b>${lit}</b> / 7 rays lit`;
+    const bb=g.getBoundingClientRect();
+    for(let k=0;k<3;k++)setTimeout(()=>spawnLantern(bb.left+bb.width/2+R(-16,16),bb.top+bb.height*.6),k*150);
+    if(lit===RAYS.length){
+      $('core').classList.add('lit');
+      $('allin').classList.add('show');
+      for(let k=0;k<10;k++)setTimeout(()=>spawnLantern(R(.1,.9)*W,H*.92),k*130);
+    }
+  };
+  g.addEventListener('click',light);
+  g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();light()}});
+  gRays.appendChild(g);
+});
+
+/* ═══════════════ PHOTO DECK ═══════════════ */
+const CAPS=[
+  'the one who goes first',
+  'our whole family, held together',
+  'she decided, so the rest of us could breathe',
+  'strict, and every bit of it love',
+  'the standard the rest of us measure against',
+  'didi 🌄'
+];
+const deck=$('deck');let order=[0,1,2,3,4,5];
+CAPS.forEach((c,i)=>{
+  const d=document.createElement('div');
+  d.className='card';d.dataset.i=i;
+  d.innerHTML=`<img src="photos/${i+1}.jpeg" alt="Kiran" onerror="this.classList.add('miss')">
+    <div class="ph"><b>◎</b><span>photo ${i+1}</span></div>
+    <div class="cap">${c}</div>`;
+  deck.appendChild(d);
+});
+function layout(){
+  order.forEach((idx,pos)=>{
+    const el=deck.children[idx];
+    el.style.zIndex=90-pos;
+    el.style.transform=`translateY(${pos*9}px) scale(${1-pos*.032}) rotate(${(pos%2?1:-1)*pos*.9}deg)`;
+    el.style.opacity=pos>3?0:1;
+  });
+}
+layout();
+deck.addEventListener('click',()=>{order.push(order.shift());layout()});
+
+/* ═══════════════ WISHES ═══════════════ */
+const WISHES=[
+  'May this year carry you, for once, instead of the other way round.',
+  'May every person you have quietly held up turn around and hold you back.',
+  'May the ones who owe you their good years say so out loud, while you can hear it.',
+  'May you get to be soft sometimes, with people who have earned it, and may it cost you nothing.',
+  'May your own plans land the way you have always made everybody else’s plans land.',
+  'May you stop somewhere high up this year, look at what you built, and let yourself be proud of it.',
+  'And may you always know: the family you hold together knows exactly who is holding it.'
+];
+const asc=$('ascent');
+WISHES.forEach((w,i)=>{
+  const d=document.createElement('div');
+  d.className='step';
+  d.innerHTML=`<em>${String(i+1).padStart(2,'0')}</em><p>${w}</p>`;
+  asc.appendChild(d);
+});
+
+/* ═══════════════ SINCE / COUNTDOWN ═══════════════ */
+function tick(){
+  const bd=new Date(BIRTHDAY),now=new Date(),ahead=bd>now;
+  const ms=Math.abs(bd-now);
+  const days=Math.floor(ms/864e5),h=Math.floor(ms%864e5/36e5),
+        m=Math.floor(ms%36e5/6e4),s=Math.floor(ms%6e4/1e3);
+  const yrs=(days/365.2425).toFixed(1);
+  $('bigN').textContent=days.toLocaleString();
+  $('bigS').textContent=ahead?'days until the day':'days of first light';
+  $('clock').textContent=`${ahead?'in':'that is'} ${yrs} years · ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+(function(){                     // static label, read from the string itself
+  const MON=['january','february','march','april','may','june','july',
+             'august','september','october','november','december'];
+  const [y,mo,da]=BIRTHDAY.slice(0,10).split('-').map(Number);
+  $('sinceLbl').textContent=`first light · ${da} ${MON[mo-1]} ${y}`;
+})();
+tick();setInterval(tick,1000);
+
+/* ═══════════════ REVEAL ═══════════════ */
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}
+}),{threshold:.14});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+const io2=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting)e.target.classList.add('in');
+}),{threshold:.6});
+setTimeout(()=>document.querySelectorAll('.step').forEach(el=>io2.observe(el)),100);
+
+/* ═══════════════ KEYS ═══════════════ */
+addEventListener('keydown',e=>{
+  const k=e.key.toLowerCase();
+  if(k==='d')setTheme(dusk()?'dawn':'dusk');
+  if(k==='m')toggleMusic();
+  if(k==='l')for(let i=0;i<6;i++)setTimeout(()=>spawnLantern(),i*120);
+});
+
+console.log('%c🌄 Happy Birthday Kiran','font:600 20px Georgia;color:#ffb347');
+console.log('%cfor the one who goes first — love, your Babu','font-size:11px;color:#ff8c42');
+console.log('%cshortcuts: D=dawn/dusk  M=music  L=lanterns','font-size:11px;color:#97a0b9');
+</script>
+</body>
+</html>
